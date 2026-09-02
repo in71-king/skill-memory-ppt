@@ -385,7 +385,11 @@ function App() {
         <section className="hero">
           <div className="hero__copy">
             <span className="micro-label">A REAL SKILL-BUILDING STORY</span>
-            <h1>“이 Template으로<br />만들어줘”가 <em>검증 가능한<br />제작 시스템</em>이 되기까지</h1>
+            <h1>
+              <span>“이 Template으로</span>
+              <span>만들어줘”가 <em>검증 가능한</em></span>
+              <span><em>제작 시스템</em>이 되기까지</span>
+            </h1>
             <p>실제 ChatGPT 대화와 PPT 결과물을 따라가며, 하나의 사내 템플릿이 실패·진단·규칙화를 거쳐 재사용 가능한 Skill로 발전하는 과정을 읽어보세요.</p>
             <button type="button" className="primary-button" onClick={() => goTo(0)}>
               제작 과정 시작하기 <ArrowDown size={18} />
