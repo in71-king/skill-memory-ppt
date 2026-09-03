@@ -3,6 +3,9 @@ import {
   ArrowDown,
   ArrowRight,
   Check,
+  ChevronLeft,
+  ChevronRight,
+  Download,
   ExternalLink,
   FileCheck2,
   ImageIcon,
@@ -15,6 +18,16 @@ import {
 
 const base = import.meta.env.BASE_URL
 
+const templateSlides = Array.from({ length: 8 }, (_, index) => ({
+  src: `template-${String(index + 1).padStart(2, '0')}.png`,
+  label: `원본 Template ${index + 1} / 8`,
+}))
+
+const curriculumSlides = Array.from({ length: 19 }, (_, index) => ({
+  src: `curriculum-${String(index + 1).padStart(2, '0')}.png`,
+  label: `8시간 커리큘럼 ${index + 1} / 19`,
+}))
+
 const scenes = [
   {
     id: 'start',
@@ -24,6 +37,9 @@ const scenes = [
     title: '비슷하게 그린 PPT는 사내 Template이 아니었다',
     why: '색과 도형을 닮게 만드는 것만으로는 원본 Master, Layout, Logo, Footer가 보존되지 않았다.',
     user: '첨부된 파일은 사내 PPT 작성 Template이다. 이 Template으로 PPT를 만드는 Skill을 만들고 싶다.',
+    userDownloads: [
+      { label: '사업부 표준 PPT 템플릿 사본.pptx', href: 'files/corporate-template.pptx' },
+    ],
     ai: '먼저 템플릿 구조와 모호한 운영 조건을 확인한 뒤 Skill Creator용 프롬프트를 설계하겠습니다.',
     changed: '“예쁜 PPT 생성”이 아니라 “원본 템플릿 안에서 작성”하는 문제로 재정의',
     tags: ['Template Fidelity', 'Before Skill', '2 Layouts'],
@@ -51,7 +67,7 @@ const scenes = [
       title: '원본 표준 Template',
       description: '표지·Summary·본문·표·Closing을 포함한 8장의 실제 기준 파일.',
       status: '요구사항 확정',
-      images: [{ src: 'template-cover.png', label: '원본 템플릿 표지' }],
+      images: templateSlides,
     },
   },
   {
@@ -119,17 +135,20 @@ const scenes = [
     title: 'Template 적용은 성공했지만 읽기 품질은 흔들렸다',
     why: '원본 프레임을 지키는 데 집중하면서 11pt 본문, 고정 Summary, Text 중심 구성이 그대로 남았다.',
     user: '실제 기술자료와 8시간 커리큘럼을 이 Skill로 사내 표준 PPT로 만들어줘.',
+    userDownloads: [
+      { label: 'AI_Essential_8시간_커리큘럼_심층리서치.pptx', href: 'files/ai-essential-8h-curriculum.pptx' },
+    ],
     ai: '원본 Master와 9개 Layout을 유지한 결과물을 만들었지만, 최신 검사 기준에서는 작은 본문이 발견됩니다.',
     changed: 'Template Fidelity만 높아도 좋은 발표자료가 되는 것은 아니라는 실제 증거 확보',
     tags: ['Template Applied', '11pt Body', 'Text Heavy'],
     result: {
       eyebrow: 'EARLY OUTPUTS',
-      title: '초기 적용 결과',
-      description: 'Etch Pilot은 구조가 단정했지만 11~11.25pt 본문이 남았고, 커리큘럼은 정보가 작은 글씨에 집중됐다.',
+      title: '8시간 커리큘럼 전체 결과',
+      description: '전체 19장을 넘겨보며 Template Fidelity와 초기 가독성 문제를 함께 확인할 수 있다.',
       status: '개선 필요',
-      images: [
-        { src: 'initial-etch.png', label: 'Etch Pilot Summary' },
-        { src: 'initial-curriculum.png', label: '8시간 커리큘럼' },
+      images: curriculumSlides,
+      downloads: [
+        { label: '8시간 커리큘럼 PPTX', href: 'files/ai-essential-8h-curriculum.pptx' },
       ],
     },
   },
@@ -149,10 +168,7 @@ const scenes = [
       title: '보이는 오류를 수치로 설명',
       description: '빈 공간은 남아 있는데 좁은 Text Box만 자동 축소된 것이 핵심 원인이었다.',
       status: '원인 확정',
-      images: [
-        { src: 'failure-overview.png', label: '슬라이드 7–9 오류' },
-        { src: 'failure-autofit.png', label: 'AutoFit 원인 분석' },
-      ],
+      images: curriculumSlides.slice(6, 9),
     },
   },
   {
@@ -168,10 +184,13 @@ const scenes = [
     tags: ['Body ≥12pt', '1–3 Columns', '3-stage QA'],
     result: {
       eyebrow: 'PERMANENT RULES',
-      title: '피드백 → 규칙 → 검사기',
-      description: '한 번의 수정 요청이 다음 모든 제작에 적용되는 지속 규칙이 됐다.',
+      title: '고정 Layout이 만든 두 가지 문제',
+      description: '슬라이드 2는 마스터에 고정된 Summary 항목명을 바꿀 수 없어 본문에 요약 제목을 다시 넣었다. 슬라이드 10은 입력량과 무관하게 큰 표 영역을 유지해 공간을 비효율적으로 사용했다.',
       status: 'QA 강화',
-      images: [{ src: 'feedback-rules.png', label: '사용자 피드백과 자동 QA' }],
+      images: [
+        { ...curriculumSlides[1], label: '슬라이드 2 · 고정 Summary 항목명', note: '고정된 좌측 제목과 실제 요약 내용이 맞지 않아 본문에 별도 제목이 중복됐다.' },
+        { ...curriculumSlides[9], label: '슬라이드 10 · 과도하게 큰 Table', note: '내용이 적어도 표 크기와 레이아웃이 고정되어 슬라이드 공간을 충분히 활용하지 못했다.' },
+      ],
     },
   },
   {
@@ -187,10 +206,13 @@ const scenes = [
     tags: ['Malgun Gothic', 'Noto Sans KR', 'Preflight'],
     result: {
       eyebrow: 'RENDER VERIFIED',
-      title: '한글을 보존한 실제 강의 슬라이드',
-      description: 'PPT 내부 글꼴은 맑은 고딕을 유지하고, 이 웹 이미지에는 검증된 렌더 전용 fallback을 적용했다.',
+      title: '같은 슬라이드, 다른 렌더링 환경',
+      description: 'PPT 내부 글꼴은 맑은 고딕으로 유지하면서 미리보기 렌더링에만 Noto Sans KR을 연결했다.',
       status: '한글 정상',
-      images: [{ src: 'font-proof.png', label: '한글 렌더 검증' }],
+      images: [
+        { src: 'font-before.png', label: 'Before · 맑은 고딕 미설치', note: '맑은 고딕을 사용할 수 없는 환경에서 한글 자소가 누락된 잘못된 미리보기.' },
+        { src: 'font-after.png', label: 'After · Noto Sans KR 적용', note: '렌더 전용 fallback 적용 후 같은 슬라이드의 한글이 정상 출력된다.' },
+      ],
     },
   },
   {
@@ -213,7 +235,11 @@ const scenes = [
         { src: 'final-paper.png', label: '논문 소개' },
         { src: 'final-patent.png', label: '특허 소개' },
         { src: 'final-lecture.png', label: 'AI 강의교안' },
-        { src: 'final-gallery.png', label: '적용 분야 종합' },
+      ],
+      downloads: [
+        { label: '논문 소개 PPTX', href: 'files/kim-2018-topological-phononics.pptx' },
+        { label: '특허 소개 PPTX', href: 'files/us12322656b2-extreme-laser-lift-off.pptx' },
+        { label: 'AI 강의교안 PPTX', href: 'files/chatgpt-productivity-2h-lecture.pptx' },
       ],
     },
   },
@@ -236,6 +262,8 @@ function ResultCard({ result, onOpen }) {
   useEffect(() => setImageIndex(0), [result])
 
   const current = result.images[imageIndex]
+  const previous = () => setImageIndex((index) => (index - 1 + result.images.length) % result.images.length)
+  const next = () => setImageIndex((index) => (index + 1) % result.images.length)
 
   return (
     <article className="result-card">
@@ -258,21 +286,23 @@ function ResultCard({ result, onOpen }) {
       </button>
 
       {result.images.length > 1 && (
-        <div className="result-tabs" aria-label="결과 이미지 선택">
-          {result.images.map((image, index) => (
-            <button
-              type="button"
-              className={index === imageIndex ? 'is-active' : ''}
-              onClick={() => setImageIndex(index)}
-              key={image.src}
-            >
-              {image.label}
-            </button>
-          ))}
+        <div className="carousel-controls" aria-label="슬라이드 넘기기">
+          <button type="button" onClick={previous} aria-label="이전 슬라이드"><ChevronLeft size={17} /></button>
+          <span><b>{imageIndex + 1}</b> / {result.images.length}<small>{current.label}</small></span>
+          <button type="button" onClick={next} aria-label="다음 슬라이드"><ChevronRight size={17} /></button>
         </div>
       )}
 
-      <p>{result.description}</p>
+      <p>{current.note || result.description}</p>
+      {result.downloads?.length > 0 && (
+        <div className="download-list">
+          {result.downloads.map((file) => (
+            <a key={file.href} href={`${base}${file.href}`} download>
+              <Download size={14} /> {file.label}
+            </a>
+          ))}
+        </div>
+      )}
       <div className="result-meta">
         <ImageIcon size={15} /> 실제 Library PPTX 전체 해상도 렌더
       </div>
@@ -301,6 +331,11 @@ function Scene({ scene, index, onOpen }) {
           <div>
             <span className="message__role">사용자</span>
             <p>{scene.user}</p>
+            {scene.userDownloads?.map((file) => (
+              <a className="message-download" key={file.href} href={`${base}${file.href}`} download>
+                <Download size={14} /> {file.label} 다운로드
+              </a>
+            ))}
           </div>
         </div>
 

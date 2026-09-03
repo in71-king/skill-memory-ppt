@@ -130,10 +130,18 @@ main { overflow: clip; }
 .slide-preview:hover img { scale: 1.018; }
 .zoom-hint { position: absolute; right: 10px; bottom: 10px; display: inline-flex; align-items: center; gap: 5px; padding: 7px 9px; border-radius: 8px; background: rgba(7,21,45,.9); color: white; font-size: 10px; opacity: 0; transition: opacity .2s; }
 .slide-preview:hover .zoom-hint { opacity: 1; }
-.result-tabs { display: flex; gap: 6px; overflow-x: auto; margin-top: 11px; padding-bottom: 2px; }
-.result-tabs button { flex: none; padding: 7px 9px; border: 1px solid #d8e3ed; border-radius: 8px; background: white; color: #6d7a89; font-size: 10px; }
-.result-tabs button.is-active { color: white; background: var(--blue); border-color: var(--blue); }
+.carousel-controls { display: grid; grid-template-columns: 36px 1fr 36px; align-items: center; gap: 9px; margin-top: 11px; }
+.carousel-controls button { display: grid; place-items: center; width: 36px; height: 34px; border: 1px solid #d8e3ed; border-radius: 9px; background: white; color: var(--blue); }
+.carousel-controls button:hover { color: white; background: var(--blue); border-color: var(--blue); }
+.carousel-controls span { min-width: 0; text-align: center; color: #8a96a5; font-size: 10px; }
+.carousel-controls b { color: var(--blue); }
+.carousel-controls small { display: block; overflow: hidden; margin-top: 2px; color: #566578; font-size: 10px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
 .result-card > p { margin: 16px 0 12px; color: #687587; font-size: 13px; line-height: 1.7; }
+.download-list { display: grid; gap: 7px; margin: 13px 0; }
+.download-list a, .message-download { display: flex; align-items: center; gap: 7px; width: fit-content; color: #1263d8; font-size: 11px; font-weight: 800; text-decoration: none; }
+.download-list a { width: auto; padding: 9px 11px; border: 1px solid #d4e2f5; border-radius: 9px; background: #f3f7fd; }
+.download-list a:hover, .message-download:hover { text-decoration: underline; }
+.message-download { margin-top: 10px; }
 .result-meta { display: flex; align-items: center; gap: 7px; padding-top: 11px; border-top: 1px solid #e8eef4; color: #98a3b0; font-size: 10px; }
 .completion { margin-top: 16px; color: #8290a0; font-size: 11px; }
 .completion > b { float: right; color: #5e6e80; }
